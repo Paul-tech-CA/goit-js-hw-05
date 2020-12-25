@@ -1,52 +1,66 @@
 'use strict';
 
-const products = [
-  { name: 'Радар', price: 1300, quantity: 4 },
-  { name: 'Сканер', price: 2700, quantity: 3 },
-  { name: 'Дроид', price: 400, quantity: 7 },
-  { name: 'Захват', price: 1200, quantity: 2 },
-];
+class Car {
+  static getSpecs({ maxSpeed, speed, isOn, distance, price }) {
+    console.log(
+      `maxSpeed; ${maxSpeed}, speed: ${speed}, isOn: ${isOn}, distance: ${distance}, price: ${price}`,
+    );
+  }
 
-const getAllPropValues = function (arr, prop) {
-  const unknown = [];
-  for (const friend of arr) if (friend[prop]) unknown.push(friend[prop]);
-  return unknown;
-};
+  constructor({ maxSpeed, price }) {
+    this.speed = 0;
+    this._price = price;
+    this.maxSpeed = maxSpeed;
+    this.isOn = false;
+    this.distance = 0;
+  }
 
-console.log(getAllPropValues(products, 'name')); // ['Радар', 'Сканер', 'Дроид', 'Захват']
+  get price() {
+    return this._price;
+  }
 
-console.log(getAllPropValues(products, 'quantity')); // [4, 3, 7, 2]
+  set price(newPrice) {
+    return (this._price = newPrice);
+  }
 
-console.log(getAllPropValues(products, 'category')); // []
+  turnOn() {
+    this.isOn = true;
+  }
 
-// const products = [
-//   { name: 'Радар', price: 1300, quantity: 4 },
-//   { name: 'Сканер', price: 2700, quantity: 3 },
-//   { name: 'Дроид', price: 400, quantity: 7 },
-//   { name: 'Захват', price: 1200, quantity: 2 },
-// ];
+  turnOff() {
+    this.isOn = false;
+    this.speed = 0;
+  }
 
-// const getAllPropValues = function (arr, prop) {
-//   const names = [];
-//   for (const index of arr) {
-//     // console.log(index);
-//     names.push(arr.prop);
-//     // console.log(names);
-//   }
-//   return names;
-// };
+  accelerate(speed) {
+    if ((this.speed += speed) <= this.maxSpeed) return this.speed;
+  }
 
-// console.log(getAllPropValues(products, 'name')); // ['Радар', 'Сканер', 'Дроид', 'Захват']
+  decelerate(speed) {
+    if ((this.speed -= speed) >= 0) return this.speed;
+  }
 
-// console.log(getAllPropValues(products, 'quantity')); // [4, 3, 7, 2]
+  drive(hours) {
+    if (this.isOn) return (this.distance += this.speed * hours);
+  }
+}
 
-// console.log(getAllPropValues(products, 'category')); // []
+const mustang = new Car({ maxSpeed: 200, price: 2000 });
 
-// 5) console.log(getAllPropValues(products, 'category')); // []
+mustang.turnOn();
+mustang.accelerate(50);
+mustang.drive(2);
 
-// получаешь
-// [undefined, undefined, undefined, undefined]
+Car.getSpecs(mustang);
+// maxSpeed: 200, speed: 50, isOn: true, distance: 100, price: 2000
 
-// Тебе нужно делать проверку прежде чем пушить
-// friend[prop] ?unknown.push(friend[prop])
-// : ""
+mustang.decelerate(20);
+mustang.drive(1);
+mustang.turnOff();
+
+Car.getSpecs(mustang);
+// maxSpeed: 200, speed: 0, isOn: false, distance: 130, price: 2000
+
+console.log(mustang.price); // 2000
+mustang.price = 4000;
+console.log(mustang.price); // 4000

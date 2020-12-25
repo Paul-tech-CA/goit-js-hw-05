@@ -1,30 +1,43 @@
 'use strict';
+// Напиши класс StringBuilder. На вход он получает один параметр -
+// строку, которую записывает в свойство _value.
 
-const countTotalSalary = function (employees) {
-  let totalSalary = 0;
-  for (let key in employees) totalSalary += employees[key];
-  return totalSalary;
-  // const values = Object.values(employees);
+// Добавь классу следующий функционал:
 
-  // for (const value of values) {
-  //   totalSalary += value;
-  // }
-};
+// Геттер value - возвращает текущее значение поля _value
+// Метод append(str) - получает парметр str (строку) и добавляет ее в конец _value
+// Метод prepend(str) - получает парметр str (строку) и добавляет ее в начало value
+// Метод pad(str) - получает парметр str (строку) и добавляет ее в начало и в конец _value
 
-console.log(countTotalSalary({})); // 0
+class StringBuilder {
+  constructor(value) {
+    this._value = value;
+  }
 
-console.log(
-  countTotalSalary({
-    mango: 100,
-    poly: 150,
-    alfred: 80,
-  }),
-); // 330
+  get value() {
+    return this._value;
+  }
 
-console.log(
-  countTotalSalary({
-    kiwi: 200,
-    lux: 50,
-    chelsy: 150,
-  }),
-); // 400
+  append(str) {
+    this._value += str;
+  }
+
+  prepend(str) {
+    this._value = str + this._value;
+  }
+
+  pad(str) {
+    this._value = str + this._value + str;
+  }
+}
+
+const builder = new StringBuilder('.');
+
+builder.append('^');
+console.log(builder.value); // '.^'
+
+builder.prepend('^');
+console.log(builder.value); // '^.^'
+
+builder.pad('=');
+console.log(builder.value); // '=^.^='
