@@ -1,39 +1,49 @@
 'use strict';
 
-const findBestEmployee = function (employees) {
-  let task = 0;
-  let keyBest;
-  for (let key in employees) {
-    if (employees[key] > task) {
-      task = employees[key];
-      keyBest = key;
-    }
+// Напиши класс Storage, который будет создавать объекты для управления
+// складом товаров. При вызове будет получать один аргумент -
+// начальный массив товаров, и записывать его в свойство items.
+
+// Добавь методы класса:
+
+// getItems() - возвращает массив текущих товаров
+// addItem(item) - получает новый товар и добавляет его к текущим
+// removeItem(item) - получет товар и, если он есть, удаляет его из текущих
+
+class Storage {
+  constructor(items) {
+    this.items = items;
   }
-  return keyBest;
-};
 
-console.log(
-  findBestEmployee({
-    ann: 29,
-    david: 35,
-    helen: 1,
-    lorence: 99,
-  }),
-); // lorence
+  getItems() {
+    console.log(this.items);
+  }
 
-console.log(
-  findBestEmployee({
-    poly: 12,
-    mango: 17,
-    ajax: 4,
-  }),
-); // mango
+  addItem(item) {
+    this.items.push(item);
+  }
 
-console.log(
-  findBestEmployee({
-    lux: 147,
-    david: 21,
-    kiwi: 19,
-    chelsy: 38,
-  }),
-); // lux
+  removeItem(item) {
+    this.item.splice(this.items.indexOf(item), 1);
+  }
+}
+
+const storage = new Storage([
+  'Нанитоиды',
+  'Пролонгер',
+  'Железные жупи',
+  'Антигравитатор',
+]);
+
+const items = storage.getItems();
+console.table(items); // [ "Нанитоиды", "Пролонгер", "Железные жупи", "Антигравитатор" ]
+
+storage.addItem('Дроид');
+console.table(storage.items); // [ "Нанитоиды", "Пролонгер", "Железные жупи", "Антигравитатор", "Дроид" ]
+
+storage.removeItem('Пролонгер');
+console.table(storage.items); // [ "Нанитоиды", "Железные жупи", "Антигравитатор", "Дроид" ]
+
+// forEach(itemOfItems => {
+//   if (itemOfItems === item)
+// });
