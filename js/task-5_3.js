@@ -26,7 +26,6 @@ class Storage {
   removeItem(item) {
     if (this.items.indexOf(item) !== -1)
       this.items.splice(this.items.indexOf(item), 1);
-    else this.items.push(item);
   }
 }
 
